@@ -20,8 +20,7 @@ LIBS=$(PACKAGE).cma $(PACKAGE).cmxa $(PACKAGE).a lib$(PACKAGE).a
 all: compile-parsers compile-lexers $(LIBS)
 
 html_sanitizer: compile-parsers compile-lexers $(LIBS) $(LIBCMIS) html_sanitizer.cmx
-	$(OCAMLOPT) -cclib -lrt -linkpkg -o html_sanitizer $(LIBCMXS) html_sanitizer.cmx 2>/dev/null || \
-        $(OCAMLOPT)             -linkpkg -o html_sanitizer $(LIBCMXS) html_sanitizer.cmx
+	$(OCAMLOPT)  -linkpkg -o html_sanitizer $(LIBCMXS) html_sanitizer.cmx
 
 install:
 	@echo "Use install-package if you want to do a system-wide install"
