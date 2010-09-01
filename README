@@ -1,0 +1,36 @@
+
+1. COMPILING AND INSTALLING THE LIBRARY SYSTEM-WIDE
+
+	make check
+	make install-package
+
+2. TESTING THE COMMAND-LINE
+
+	$> make html_sanitizer
+	$> ./html_sanitizer --level nanotext --string "<div>text <b>to be stripped</b><pre>off html</div>"
+
+	text to be stripped
+	off html
+
+	$>
+
+4. USING THE Sanitizer API
+
+4.1 Have a look into Sanitizer.mli to see the external interface.
+
+4.2 The simplest OCaml program:
+
+  === test.ml ===
+  let _ =
+    let sanitizer = new Sanitizer.html_sanitizer Sanitizer.Aggressive in
+    print_string (sanitizer#sanitize_string
+			  "[<script>evil code</script>]\n"
+			^ "[<b>safe bold sentence</b>]\n");
+  === test.ml ===
+
+ $> ocamlfind ocamlopt -package "ocaml-html-sanitizer" -linkpkg -o test test.ml
+ $> ./test
+ []
+ [<b>safe bold sentence</b>]
+ $>
+
