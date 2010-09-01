@@ -1,0 +1,30 @@
+# Test javascript:alert() in URL attributes
+<a href="javascript:alert(1)">
+<a href=""></a>
+
+<a href=" JavaScript: alert(1)">
+<a href=""></a>
+
+# Test our deep CSS inspection
+<span style="font-size: 100pt">
+<span style=""></span>
+
+<span style="unknownAttribute: someValue">
+<span style="unknownAttribute: someValue;"></span>
+
+<span style="unknownAttribute: url('javascript:alert(1))')">
+<span style=""></span>
+
+# Test javascript:alert() in CSS URLs
+<span style="background: url('javascript:alert(1))')">
+<span style=""></span>
+
+# Test IE expressions
+<span style="left: expression(document.body.width-document.body.height);">foo
+<span>foo</span>
+
+# Some W32/Bagle-HTML vulnerability
+<span STYLE="display:none"DATA="http://abc/def.html">
+<span style="display: none;" data="http://abc/def.html"></span>
+<span style="display: none;"></span>
+

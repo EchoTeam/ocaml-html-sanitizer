@@ -1,0 +1,37 @@
+# Simple character
+a
+a
+
+# Closed tag
+<p></p>
+<p></p>
+
+# Unclosed tag
+<p>
+<p></p>
+
+a <P> b 
+a <p> b </p>
+a <p> b </p>
+
+# Simple break
+<br>
+<br>
+
+# HTML does not permit short XML form
+<br/>
+<br>
+
+<a href='http://domain.com/<">"'></a>
+<a href="http://domain.com/<&quot;>&quot;"></a>
+
+some <script>alert(1)</script>
+some 
+some 
+
+some <script>alert(1)</script> blah
+some  blah
+some  blah
+
+some <script> alert(1)
+some 

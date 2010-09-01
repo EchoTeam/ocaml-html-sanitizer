@@ -1,0 +1,53 @@
+
+script <a href=""> url </a>.
+script <a href=""> url </a>.
+
+script <a href= javascript:alert(1)> url </a>.
+script <a href=""> url </a>.
+
+script <a href=" javascript:alert(1)"> url </a>.
+script <a href=""> url </a>.
+
+<a href="javascript:alert(1);">zzz</a>
+<a href="">zzz</a>
+
+encoded javascript href <a href="&#106;&#97;&#118;&#97;&#115;&#99;&#114;&#105;&#112;&#116;:alert(5);">some link</a> and some <a href="&#106&#97&#118&#97&#115&#99&#114&#105&#112&#116:alert(5);">other link</a>.
+encoded javascript href <a href="">some link</a> and some <a href="">other link</a>.
+
+# Valid macromedia flash: 
+<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" width="425" height="350"><param name="src" value="http://www.youtube.com/v/yRmH0pA-VR0&feature=related"/><param name="width" value="425"/><param name="height" value="350"/><embed type="application/x-shockwave-flash" src="http://www.youtube.com/v/yRmH0pA-VR0&feature=related" width="425" height="350"></embed></object>
+<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" width="425" height="350"><param name="src" value="http://www.youtube.com/v/yRmH0pA-VR0&feature=related"></param><param name="width" value="425"></param><param name="height" value="350"></param><embed type="application/x-shockwave-flash" src="http://www.youtube.com/v/yRmH0pA-VR0&feature=related" width="425" height="350"></embed></object>
+
+# Valid macromedia flash: 
+<object classid="clsid:bla-bla-bla" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" width="425" height="350"><param name="src" value="javascript:http://www.youtube.com/v/yRmH0pA-VR0&feature=related"/><param name="width" value="425"/><param name="height" value="350"/><embed type="application/javascript" src="http://www.youtube.com/javascript.js" width="425" height="350"></embed></object>
+<object classid="" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" width="425" height="350"><param name="src" value=""></param><param name="width" value="425"></param><param name="height" value="350"></param><embed type="application/javascript" src="http://www.youtube.com/javascript.js" width="425" height="350"></embed></object>
+
+<a href="http://some.host/ada?a=b&c=d>">< > &lt; &gt; & &amp; &nbsp; &#160;</a>
+<a href="http://some.host/ada?a=b&c=d>">&lt; &gt; &lt; &gt; &amp; &amp; &nbsp; &nbsp;</a>
+
+
+# Attributes are not permitted in anything but <a href...>
+<b attribute="value">zzzz</b> And this is an unknown tag: <div>
+<b attribute="value">zzzz</b> And this is an unknown tag: <div></div>
+<b>zzzz</b> And this is an unknown tag: <div></div>
+
+# Improperly nested attributes:
+<i>some<b>text</i>and some more</b>
+<i>some<b>text</b></i>and some more
+
+Unclosed <i>attribute
+Unclosed <i>attribute</i>
+
+Some exploit in href: <a href="http://path/<script>alert(1)</script>">use standard html escaping</a>
+Some exploit in href: <a href="http://path/<script>alert(1)</script>">use standard html escaping</a>
+
+Here's a math problem: b < a where a=5 and b>9.
+Here's a math problem: b &lt; a where a=5 and b&gt;9.
+
+some <script> tag
+some 
+
+unfinished header <a href=http://some host> and some more</a>.
+unfinished header <a href="http://some" host="host"> and some more</a>.
+unfinished header <a href="http://some"> and some more</a>.
+
