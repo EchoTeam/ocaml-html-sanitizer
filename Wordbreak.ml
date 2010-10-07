@@ -1,6 +1,4 @@
 
-(*s "Finalize" the CJSON value by internal_break_wordsaping Exact and Compound *)
-
 (* Parsing states:
  * Initial: ordinary string
  * EntRef: entity reference, like &nbsp;, &copy; or &trade;.
