@@ -11,6 +11,7 @@
 
 <span style="unknownAttribute: someValue">
 <span style="unknownAttribute: someValue;"></span>
+<span style=""></span>
 
 <span style="unknownAttribute: url('javascript:alert(1))')">
 <span style=""></span>
@@ -26,5 +27,5 @@
 # Some W32/Bagle-HTML vulnerability
 <span STYLE="display:none"DATA="http://abc/def.html">
 <span style="display: none;" data="http://abc/def.html"></span>
-<span style="display: none;"></span>
+<span style=""></span>
 

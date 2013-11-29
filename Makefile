@@ -20,7 +20,8 @@ LIBS=$(PACKAGE).cma $(PACKAGE).cmxa $(PACKAGE).a lib$(PACKAGE).a
 all: compile-parsers compile-lexers $(LIBS)
 
 html_sanitizer: compile-parsers compile-lexers $(LIBS) $(LIBCMIS) html_sanitizer.cmx
-	$(OCAMLOPT)  -linkpkg -o html_sanitizer $(LIBCMXS) html_sanitizer.cmx
+	$(OCAMLOPT) -cclib -lrt -linkpkg -o html_sanitizer $(LIBCMXS) html_sanitizer.cmx 2>/dev/null || \
+        $(OCAMLOPT)             -linkpkg -o html_sanitizer $(LIBCMXS) html_sanitizer.cmx
 
 install:
 	@echo "Use install-package if you want to do a system-wide install"
@@ -44,10 +45,14 @@ $(PACKAGE).cmxa: $(LIBCMIS) $(LIBCMXS)
 lib$(PACKAGE).a: $(LIBCMIS) $(LIBCMXS)
 	ocamlmklib -o lib$(PACKAGE) $(LIBCMXS)
 
-check: html_sanitizer
+check: check_html_sanitizer_files check_html_sanitizer_cmdline
+
+check_html_sanitizer_files: html_sanitizer
+	./html_sanitizer --test ./tests/*.ht
+
+check_html_sanitizer_cmdline: html_sanitizer
 	./html_sanitizer --string "<SCRIPT>script</script>" --verify "script"
 	echo "unclosed</script>" | ./html_sanitizer --file - --verify "unclosed"
-	./html_sanitizer --test ./tests/*.ht
 	./html_sanitizer --string "замок" --verify "замок"
 	./html_sanitizer --string "<script>foo</script>" --verify '<script>foo</script>' --level transparent
 	./html_sanitizer --string "<p >foo</p >" --verify "<p>foo</p>" --level transparent
@@ -56,9 +61,17 @@ check: html_sanitizer
 	./html_sanitizer --string "<unknown-tag bar='<script>' OnClick='alert(1)' a=b>foo" --level permissive --verify '<unknown-tag bar="<script>" a="b">foo</unknown-tag>'
 	./html_sanitizer --string "<tag>0123456789abcdef<foo></tag>" --permitted-tags "tag" --verify "<tag>0123456789abcdef</tag>"
 	./html_sanitizer --string "<tag>0123456789abcdef<foo></tag>" --permitted-tags "tag foo" --verify "<tag>0123456789abcdef<foo></foo></tag>"
-	./html_sanitizer --string "<tag>0123456789abcdef</tag>" --permitted-tags "tag" --break-long-words true --verify "<tag>0123456789<wbr></wbr>abcdef<wbr></wbr></tag>"
-	./html_sanitizer --break-long-words true --string "http://example.com/somelongexpression, and then some" --verify "http://example.com/somelongexpression<wbr></wbr>, and then some<wbr></wbr>"
+	./html_sanitizer --string "<tag>0123456789abcdef</tag>" --permitted-tags "tag" --break-long-words url-aware --verify "<tag>0123456789<wbr></wbr>abcdef<wbr></wbr></tag>"
+	./html_sanitizer --break-long-words url-aware --string "http://example.com/somelongexpression, and then some" --verify "http://example.com/somelongexpression<wbr></wbr>, and then some<wbr></wbr>"
 	./html_sanitizer --string "foo<p>bar<br>baz</p>zab" --level nanohtml --verify "foo<br>bar<br>baz<br>zab"
+	./html_sanitizer --string "xxxfoobarbazxxx" --level nanohtml --verify "xxxfoobarbazxxx"
+	./html_sanitizer --string "xxxfoobarbazxxx" --level nanohtml --verify "xxxfoobarb<wbr></wbr>azxxx<wbr></wbr>" --break-long-words dumb
+	./html_sanitizer --string "<a href='http://foo.bar/somelongurlwhichshouldnotbebroken'>http://foo.bar/somelongurlwhichwillbebroken</a>" --verify '<a href="http://foo.bar/somelongurlwhichshouldnotbebroken">http://foo<wbr></wbr>.bar/somelo<wbr></wbr>ngurlwhichw<wbr></wbr>illbebroken</a>' --break-long-words url-smart
+	./html_sanitizer --string '<a data-resolved="http://foo/bar">' --verify '<a data-resolved="http://foo/bar"></a>'
+	./html_sanitizer --string '<a data-resolve="http://foo/bar">' --verify '<a></a>'
+	./html_sanitizer --string '<a data-src-web="http://foo/bar">' --verify '<a></a>'
+	./html_sanitizer --string '<img data-src-web="http://foo/bar">' --verify '<img data-src-web="http://foo/bar">'
+	./html_sanitizer --string '<img data-src-web="bar">' --verify '<img>'
 
 CSS_Parser.cmi: CSS_Types.cmo
 

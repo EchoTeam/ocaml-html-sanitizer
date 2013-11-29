@@ -61,7 +61,7 @@ let sanitize_channel san in_channel =
 
 type args = {
         mutable test_files: string list;
-        mutable break_long_words: bool;
+        mutable break_long_words: word_break_method;
         mutable permitted_tags: string list;
         mutable sanity_level: Sanitizer.required_sanity_level;
         mutable sanitize_string: string option;
@@ -71,7 +71,7 @@ type args = {
 
 let mk_default_args () = {
                 test_files = [];
-                break_long_words = false;
+                break_long_words = NoWordBreak;
                 permitted_tags = [];
                 sanity_level = Sanitizer.Aggressive;
                 sanitize_string = None;
@@ -83,7 +83,12 @@ let (args, arglist) =
     let arglist = Arg.align [
         ("--test", Arg.Rest (fun s -> args.test_files <- args.test_files @ [s]),
         "<file>... Check sanitizing against a list of special test files");
-        ("--break-long-words", Arg.Bool (fun b -> args.break_long_words <- b),
+        ("--break-long-words", Arg.Symbol (["false"; "url-aware"; "url-smart"; "dumb"], function
+            | "false" -> args.break_long_words <- NoWordBreak
+            | "url-aware" -> args.break_long_words <- NoURLWordBreak
+            | "url-smart" -> args.break_long_words <- NoStandaloneURLWordBreak
+            | "dumb" -> args.break_long_words <- DumbWordBreak
+        ),
         "<bool>  Insert HTML word breaks within long runs of characters");
         ("--level", Arg.Symbol (Sanitizer.sanity_levels,
                 fun s -> args.sanity_level <- sanity_level_of_string s),
