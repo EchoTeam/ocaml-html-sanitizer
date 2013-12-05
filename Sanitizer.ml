@@ -16,8 +16,8 @@ let re_url = Str.regexp_case_fold "^[ ]*\\(\\(\\(http\\|https\\|ftp\\|feed\\|new
 let re_url_relative = Str.regexp_case_fold "[ ]*\\(/[^@]*\\)[ ]*$";;
 let re_mailto = Str.regexp_case_fold "^[ ]*\\(mailto:[a-z0-9_.-]+@[a-z0-9_.-]+\\)?[ ]*$";;
 
-let re_safeurl = Str.regexp_case_fold "^[ ]*\\(\\(\\(\\(http\\|https\\|ftp\\|feed\\|news\\|mailto\\):\\)?//\\(www\\.\\)?\\(youtube\\(-nocookie\\)?\\.com\\|youtu\\.be\\|api\\.embed\\.ly\\|\\(player\\.\\)?vimeo\\.com\\|download\\.macromedia\\.com\\|abcnews\\.go\\.com\\|twitvid\\.com\\|embed\\.spotify\\.com\\|platform\\.twitter\\.com\\)\\(/[^@]*\\)?\\)?\\)$";;
-let re_safeurl_or_word = Str.regexp_case_fold "^[ ]*\\(\\(https?://\\(www\\.\\)?\\(youtube\\(-nocookie\\)?\\.com\\|youtu\\.be\\|api\\.embed\\.ly\\|\\(player\\.\\)?vimeo\\.com\\|download\\.macromedia\\.com\\|abcnews\\.go\\.com\\|twitvid\\.com\\)\\(/[^@]*\\)?\\)\\|\\([0-9a-z_]+[ ]*\\)\\)$";;
+let re_safeurl = Str.regexp_case_fold "^[ ]*\\(\\(\\(\\(http\\|https\\|ftp\\|feed\\|news\\|mailto\\):\\)?//\\(www\\.\\)?\\(youtube\\(-nocookie\\)?\\.com\\|youtu\\.be\\|cdn\\.embedly\\.com\\|api\\.embed\\.ly\\|\\(player\\.\\)?vimeo\\.com\\|download\\.macromedia\\.com\\|abcnews\\.go\\.com\\|twitvid\\.com\\|embed\\.spotify\\.com\\|platform\\.twitter\\.com\\)\\(/[^@]*\\)?\\)?\\)$";;
+let re_safeurl_or_word = Str.regexp_case_fold "^[ ]*\\(\\(https?://\\(www\\.\\)?\\(youtube\\(-nocookie\\)?\\.com\\|youtu\\.be\\|cdn\\.embedly\\.com\\|api\\.embed\\.ly\\|\\(player\\.\\)?vimeo\\.com\\|download\\.macromedia\\.com\\|abcnews\\.go\\.com\\|twitvid\\.com\\)\\(/[^@]*\\)?\\)\\|\\([0-9a-z_]+[ ]*\\)\\)$";;
 let re_plainid = Str.regexp "^[@ a-zA-Z0-9/#.,;=+-]*$";;
 let re_classid = Str.regexp_case_fold "^[ ]*clsid:d27cdb6e-ae6d-11cf-96b8-444553540000[ ]*$";;
 
